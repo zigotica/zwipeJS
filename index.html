@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="zwipeJS Tiny jQuery slider with hardware accelerated CSS transitions">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zwipeJS - Tiny jQuery slider - Documentation</title>
+
+    <link href="zwipe.css" rel="stylesheet">
+    <script src="jq.js"></script>
+    <script src="jq.zwipe.js"></script>
+</head>
+
+<body>
+
+<h1>zwipeJS</h1>
+<h2>Tiny jQuery slider with hardware accelerated CSS transitions</h2>
+
+<p>zwipeJS is a very small javascript slider (~3Kb compressed, source ~450LOC). It extends jQuery as a plugin, and uses touch events when available, resorting to mouse events otherwise. It avoids flickering by using CSS transforms where available, and scroll positions in older browsers. This means it can be used in most situations and devices. Pointer events will be added in the future.</p>
+
+<h3>Configuration</h3>
+<h4>Simple markup</h4>
+<p>You can use any markup elements you want, you simply define the selectors you want to use in settings:</p>
+<pre>
+wrapperSelector: '.wrappersliderbox',
+outerSelector: '.outersliderbox',
+childrenSelector: '> li',
+activeClass : 'active',
+bulletBoxClass: 'bulletsbox',
+bulletClass: 'bullet',
+arrowBoxClass: 'arrowsbox',
+arrowClass: 'arrow',
+arrowPrevClass: 'arrow-prev',
+arrowNextClass: 'arrow-next',
+animatingClass: '___zwipping',
+</pre>
+<p>Please note a minimum of two parent elements are needed for the block containing the individual slides. See detailed examples below. </p>
+
+<h4>Snap, centering, number of slides advancing…</h4>
+<p>You can customise some key properties in settings:</p>
+<pre>
+minDist : 50,       // if moved distance smaller than minDist we do not change slide
+snap : true,        // true: snap to wrapper onEnd, false: do not snap
+advanceOne : false, // false: go to closest onEnd (based on half slides), false: only one
+centered: false,    // true: center item in wrapper when active, false: set on edge
+silent : false,     // false: update position while zwipping, true: do not update
+</pre>
+<p>Please note there is no Loop behaviour at the moment. </p>
+
+
+<h4>Optional navigation</h4>
+<p>Also define if you want to show bullet / arrow navigation</p>
+<pre>
+bulletable : true,  // true: use bullets for navigation, false: do not use
+arrowable : true,   // true: use arrows for navigation, false: do not use
+</pre>
+
+<h4>Avoid when triggering actionable elements</h4>
+<p>Since you can have any type of HTML inside your slides, even actionable elements, you might want to exclude these from triggering zwipe using the given properties in settings:</p>
+<pre>
+avoidEls : ['A','BUTTON', 'INPUT'],
+avoidCls : ['dontzwipe'],
+</pre>
+
+<h4>Custom callbacks</h4>
+<p>You can also define custom callbacks for start / move / end / goTo methods:</p>
+<pre>
+// customisable callbacks
+zwipeStartCallback: function ( obj, data, opts ) { },
+zwipeMoveCallback: function ( obj, data, opts ) { },
+zwipeEndCallback: function ( obj, data, opts ) { },
+goToCallback: function ( obj, opts ) { }
+</pre>
+
+
+<h3>Demos</h3>
+<h4>Horizontal example</h4>
+<div class="outersliderbox horizontal">
+  <div class="wrappersliderbox">
+      <ul id="dalisth">
+          <li><span>1</span><a href="http://www.github.com/zigotica/zwipeJS">zwipeJS</a></li>
+          <li class="small">2</li>
+          <li class="small">3</li>
+          <li class="small">4</li>
+          <li class="small">5</li>
+          <li class="small">6</li>
+          <li class="small">7</li>
+          <li>8</li>
+          <li>9</li>
+      </ul>
+  </div>
+</div>
+<pre>
+&lt;div class=&quot;outersliderbox horizontal&quot;&gt;
+  &lt;div class=&quot;wrappersliderbox&quot;&gt;
+    &lt;ul id=&quot;dalisth&quot;&gt;
+      &lt;li&gt;
+        &lt;span&gt;1&lt;/span&gt;
+        &lt;a href=&quot;http://www.github.com/zigotica/zwipeJS&quot;&gt;zwipeJS&lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;2&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;3&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;4&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;5&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;6&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;7&lt;/li&gt;
+      &lt;li&gt;8&lt;/li&gt;
+      &lt;li&gt;9&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  $(function() {
+    $('#dalisth').zwipe();
+  });
+&lt;/script&gt;
+</pre>
+
+<h4>Vertical example</h4>
+<div class="outersliderbox vertical">
+  <div class="wrappersliderbox">
+      <ul id="dalistv">
+          <li>1</li>
+          <li class="small">2</li>
+          <li class="small">3</li>
+          <li class="small active">4</li>
+          <li>5</li>
+      </ul>
+  </div>
+</div>
+<pre>
+&lt;div class=&quot;outersliderbox vertical&quot;&gt;
+  &lt;div class=&quot;wrappersliderbox&quot;&gt;
+    &lt;ul id=&quot;dalistv&quot;&gt;
+      &lt;li&gt;1&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;2&lt;/li&gt;
+      &lt;li class=&quot;small&quot;&gt;3&lt;/li&gt;
+      &lt;li class=&quot;small active&quot;&gt;4&lt;/li&gt;
+      &lt;li&gt;5&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  $(function() {
+    $('#dalistv').zwipe({centered:true});
+  });
+&lt;/script&gt;
+</pre>
+
+<p>You can also instantiate several at once if using same configurations:</p>
+
+<pre>
+&lt;script&gt;
+$(function() {
+  $('ul').each(function(){
+    $(this).zwipe({});
+  });
+});
+&lt;/script&gt;
+</pre>
+
+<h3>Contributions</h3>
+<p>Please contribute to <a href="http://www.github.com/zigotica/zwipeJS/">zwipeJS github repo</a></p>
+
+<h3>License</h3>
+<p>zwipeJS is licensed under <a href="http://www.github.com/zigotica/zwipeJS/blob/master/license.txt">FreeBSD</a>. Both project and documentation site created by <a class="creator" href="http://www.zigotica.com">zigotica</a>.</p>
+
+<script>
+$(function() {
+  $('#dalisth').zwipe();
+  $('#dalistv').zwipe({centered:true});
+});
+</script>
+
+</body>
+</html>
